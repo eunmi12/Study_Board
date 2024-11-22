@@ -1,0 +1,56 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.4'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.mysite'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	/*spring-boot-devtools용*/
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	/*롬복 설정용*/
+	implementation('org.projectlombok:lombok')
+	annotationProcessor('org.projectlombok:lombok')
+	/*H2 DB 설정용*/
+	runtimeOnly 'com.h2database:h2'
+	/*JPA용 데이터 베이스를 저장하거나 조회하기 위함 */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	/*JUnit용 리포지토리를 테스트하기 위함*/
+	testImplementation 'org.junit.jupiter:junit-jupiter'
+	//이 밑에 부분이 해당 라이브러리가 테스트 실행시에만 사용됨을 의미한다.
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	//템플릿 엔진을 위한 타임리프 설정
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+	//입력받은 값 검증하기
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	//스프링 시큐리티 설정
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	//마크다운 설치용
+	implementation 'org.commonmark:commonmark:0.21.0'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

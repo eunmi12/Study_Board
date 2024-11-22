@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html  lang="ko-KR" layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문 등록</h5>
+    <form th:object="${questionForm}" method="post">
+        <!--기존에 있던 th:action 태그를 삭제하여서 자동으로 csrf값이 생성되지 않기 때문에 아래처럼 직접 추가해준 것-->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+        </div>
+<!--            for은 어떤 속성과 연결하고자 하는 입력요소의 id 값과 동일해야함. 그래서 -->
+<!--            input의 id, textarea의 id값과 동일 요소를 입력한 것임.-->
+        <div class="mb-3">
+            <label for="subject" class="form-label">제목</label>
+            <input type="text" th:field="*{subject}" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+        </div>
+        <input type="submit" value="저장하기" class="btn btn-primary my-2"/>
+    </form>
+</div>
+</body>
+</html>
