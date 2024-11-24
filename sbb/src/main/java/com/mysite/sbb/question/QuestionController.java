@@ -3,6 +3,7 @@ package com.mysite.sbb.question;
 import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.user.SiteUser;
 import com.mysite.sbb.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/question")//이렇게 되면 프리픽스가 설정되기때문에 여기있는 url들은 항상 /question이 기본값으로 박혀있음.
 @RequiredArgsConstructor //생성자 방식으로 questionRepository 객체를 주입함. 롬복이 제공, final 이 붙은 속성을 포함하는 생성자를 자동으로 만들어줌
 @Controller
@@ -31,7 +33,7 @@ public class QuestionController {
 //    @ResponseBody
     public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                        @RequestParam(value = "kw", defaultValue = "") String kw) { //매개 변수로 Model을 지정하면 객체가 자동으로 생성 된다.
-
+        log.info("page:{}, kw:{}", page,kw);
         Page<Question> paging = this.questionService.getList(page,kw);
 //        List<Question> questionList = this.questionService.getList();
         model.addAttribute("paging", paging);
